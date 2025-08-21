@@ -1,0 +1,129 @@
+<link rel="stylesheet" href="css/styles.css"/>
+<!DOCTYPE HTML>
+<head>
+    <title>Featured Games</title>
+</head>
+<body>
+    <header>
+        <a href="DTS_GhostyGames_Website.html">
+            <img src="Images/NEWGhostyGames.png" class="logo" alt="Logo" style="width:180px;height:150px;">
+        </a>
+        <h1>Featured Games</h1>
+        <nav>
+           <a href="DTS_GhostyGames_Website.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="donate.html">Donate</a>
+        </nav>
+        <div class="search-container">
+            <input type="text" placeholder="Search games..." id="search-input">
+            <button id="search-button">Search</button>
+        </div>
+         <div class="login-container" id="login-container">
+            <button id="login-button">
+                <a href="login.html" id="login">Log In</a>
+            </button>
+        </div>
+
+        <div id="profile-container" style="display:none;">
+            <span id="user-email" style="margin-right:10px; font-weight:bold;"></span>
+            <button id="logout-button">Log Out</button>
+        </div>
+
+    </header>
+    <main>
+        <h2>Featured Games</h2>
+        <p>Check out our latest and most popular games!</p>
+
+<div class="games-grid">
+<a class="game-card" href="Teritorial.html">
+<img src="images/teritorial.png"  alt="Teritorial">
+<h3>Teritorial</h3>
+<p>This Game is all about strategy and territory control!</p>
+</a>
+<a class="game-card" href="Tetris.html">
+<img src="Images/tetris.png" alt="Tetris">
+<h3>Tetris</h3>
+<p>Classic puzzle game where you fit falling blocks together.</p>
+</a>
+<a class="game-card" href="spaceinvaders.html">
+<img src="images/spaceinvaders.png" alt="spaceinvaders">
+<h3>Invading Space</h3>
+<p>Classic arcade game where you defend against waves of aliens.</p>
+</a>
+<a class="game-card" href="snake.html">
+<img src="images/snake.png" alt="Snake">
+<h3>Snake</h3>
+<p>Eat food, grow longer, and avoid hitting yourself in this classic game.</p>
+</a>
+<a class="game-card" href="flappybird.html">
+<img src="images/flappybird.png" alt="Flappy Bird">
+<h3>Flappy Bird</h3>
+<p>Tap to fly and dodge pipes in this addictive endless runner.</p>
+</a>
+<a class="game-card" href="2048.html">
+<img src="images/2048.png" alt="2048">
+<h3>2048</h3>
+<p>Combine tiles to reach 2048 in this popular puzzle game.</p>
+</a>
+<a class="game-card" href="minesweeper.html">
+<img src="images/minesweeper.png" alt="Minesweeper">
+<h3>Minesweeper</h3>
+<p>Uncover all the safe squares without detonating any mines!</p>
+</a>
+<a class="game-card" href="breakout.html">
+<img src="images/breakout.png" alt="Breakout">
+<h3>Breakout</h3>
+<p>Bounce the ball to break all the bricks in this arcade classic.</p>
+</a>
+<a class="game-card" href="pong.html">
+<img src="images/pong.png" alt="Pong">
+<h3>Pong</h3>
+<p>Challenge a friend or the computer in this table tennis game.</p>
+</a>
+<a class="game-card" href="dino.html">
+<img src="images/dino.png" alt="Dino Run">
+<h3>Dino Run</h3>
+<p>Jump over obstacles and run as far as you can!</p>
+</a>
+</div>
+</main>
+    </main>
+    <footer>
+         <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSpebs9nP97-IkXXGALGR2vCqcTTOzlyo",
+            authDomain: "ghoatygames.firebaseapp.com",
+            projectId: "ghoatygames",
+            storageBucket: "ghoatygames.firebasestorage.app",
+            messagingSenderId: "606779515816",
+            appId: "1:606779515816:web:774ccc3cd8d7f895f7339d",
+            measurementId: "G-CCE1LRLR46"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById("login-container").style.display = "none";
+                document.getElementById("profile-container").style.display = "inline-block";
+                document.getElementById("user-email").textContent = user.email;
+            } else {
+                document.getElementById("login-container").style.display = "inline-block";
+                document.getElementById("profile-container").style.display = "none";
+            }
+        });
+
+        document.getElementById("logout-button").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "dts_ghostygames_website.html";
+            }).catch((error) => {
+                console.error("Logout error:", error);
+            });
+        });
+    </script>
+    </footer>

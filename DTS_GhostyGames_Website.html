@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="css/styles.css"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ghosty Games - Unblocked Games</title>
+</head>
+<body>
+    <header>
+        <img src="Images/NEWGhostyGames.png" class="logo" alt="Logo" style="width:180px;height:150px;">
+        <h1>Ghosty Games</h1>
+        <nav>
+            <a href="DTS_GhostyGames_Website.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="donate.html">Donate</a>
+        </nav>
+
+        <div class="login-container" id="login-container">
+            <button id="login-button">
+                <a href="login.html" id="login">Log In</a>
+            </button>
+        </div>
+
+        <div id="profile-container" style="display:none;">
+            <span id="user-email" style="margin-right:10px; font-weight:bold;"></span>
+            <button id="logout-button">Log Out</button>
+        </div>
+
+        <div class="search-container">
+            <input type="text" placeholder="Search games..." id="search-input">
+            <button id="search-button">Search</button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Categories</h1>
+        <p>Play your favorite unblocked games in any category, anytime, anywhere. No restrictions, just fun!</p>
+        <div class="games-grid">
+            <a class="game-card" href="featured.html">
+                <img src="images/controller.png" alt="controller">
+                <h3>Featured Games</h3>
+                <p>Try Our Latest And Most Popular Games!</p>
+            </a>
+            <a class="game-card" href="Popular.html">
+                <img src="https://img.icons8.com/fluency/96/000000/pacman.png" alt="Popular">
+                <h3>Popular Games!</h3>
+                <p>The Most Played Games On Our Site.</p>
+            </a>
+            <a class="game-card" href="editors-pick.html">
+                <img src="images/editor.png" alt="editors-pick">
+                <h3>Editors Pick!</h3>
+                <p>Our Editors Picked These Games For You To Try.</p>
+            </a>
+            <a class="game-card" href="favorites.html">
+                <img src="Images/favourite.png" alt="favorites">
+                <h3>Favorites!</h3>
+                <p>Your Favourite Games.</p>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6480692859796192"
+            crossorigin="anonymous"></script>
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-6480692859796192"
+            data-ad-slot="5049938623"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </footer>
+    <footer>
+        &copy; 2025 Ghosty Games. All rights reserved.
+        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Contact Us</a>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSpebs9nP97-IkXXGALGR2vCqcTTOzlyo",
+            authDomain: "ghoatygames.firebaseapp.com",
+            projectId: "ghoatygames",
+            storageBucket: "ghoatygames.firebasestorage.app",
+            messagingSenderId: "606779515816",
+            appId: "1:606779515816:web:774ccc3cd8d7f895f7339d",
+            measurementId: "G-CCE1LRLR46"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById("login-container").style.display = "none";
+                document.getElementById("profile-container").style.display = "inline-block";
+                document.getElementById("user-email").textContent = user.email;
+            } else {
+                document.getElementById("login-container").style.display = "inline-block";
+                document.getElementById("profile-container").style.display = "none";
+            }
+        });
+
+        document.getElementById("logout-button").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "dts_ghostygames_website.html";
+            }).catch((error) => {
+                console.error("Logout error:", error);
+            });
+        });
+    </script>
+</body>
+</html>

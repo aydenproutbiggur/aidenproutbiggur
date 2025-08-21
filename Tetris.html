@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="css/styles.css"/>
+<!DOCTYPE HTML>
+<head>
+    <title>Tetris</title>
+</head>
+<body>
+    <header>
+        <a href="DTS_GhostyGames_Website.html">
+            <img src="Images/NEWGhostyGames.png" class="logo" alt="Logo" style="width:180px;height:150px;">
+        </a>
+        <h1>Tetris</h1>
+        <nav>
+            <a href="DTS_GhostyGames_Website.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="donate.html">Donate</a>
+        </nav>
+         <div class="login-container" id="login-container">
+            <button id="login-button">
+                <a href="login.html" id="login">Log In</a>
+            </button>
+        </div>
+
+        <div id="profile-container" style="display:none;">
+            <span id="user-email" style="margin-right:10px; font-weight:bold;"></span>
+            <button id="logout-button">Log Out</button>
+        </div>
+
+        <div class="search-container">
+            <input type="text" placeholder="Search games..." id="search-input">
+            <button id="search-button">Search</button>
+        </div>
+    </header>
+    <iframe src="https://openprocessing.org/sketch/313016/embed"
+        width="800"
+        height="600"
+        frameborder="0"
+        allowfullscreen>
+</iframe>
+         <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSpebs9nP97-IkXXGALGR2vCqcTTOzlyo",
+            authDomain: "ghoatygames.firebaseapp.com",
+            projectId: "ghoatygames",
+            storageBucket: "ghoatygames.firebasestorage.app",
+            messagingSenderId: "606779515816",
+            appId: "1:606779515816:web:774ccc3cd8d7f895f7339d",
+            measurementId: "G-CCE1LRLR46"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById("login-container").style.display = "none";
+                document.getElementById("profile-container").style.display = "inline-block";
+                document.getElementById("user-email").textContent = user.email;
+            } else {
+                document.getElementById("login-container").style.display = "inline-block";
+                document.getElementById("profile-container").style.display = "none";
+            }
+        });
+
+        document.getElementById("logout-button").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "dts_ghostygames_website.html";
+            }).catch((error) => {
+                console.error("Logout error:", error);
+            });
+        });
+    </script>
