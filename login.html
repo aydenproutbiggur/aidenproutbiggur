@@ -125,7 +125,7 @@
         .then(() => {
           document.getElementById("message").style.color = "green";
           document.getElementById("message").innerText = "Google login successful!";
-          setTimeout(() => window.location.href = "dts_ghostygames_website.html", 800);
+          setTimeout(() => window.location.href = "indexhtml", 800);
         })
         .catch(error => document.getElementById("message").innerText = error.message);
     });
