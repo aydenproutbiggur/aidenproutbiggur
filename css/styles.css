@@ -193,9 +193,23 @@ a{
     font-size: 12px;
     border-radius: 12px;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition:  0.2s ease;
 }
 
 #logout-button:hover {
+    background: #e0e0e0;
+}
+.donate-button {
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition:  0.2s ease;
+}
+
+.donate-button:hover {
     background: #e0e0e0;
 }
