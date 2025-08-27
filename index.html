@@ -64,6 +64,22 @@
                 <p>Your Favourite Games.</p>
             </a>
         </div>
+
+        <section id="leaderboard-section" style="max-width:400px;margin:40px auto 0 auto;padding:24px;background:#282b33;border-radius:12px;box-shadow:0 2px 12px rgb(255, 255, 255);">
+            <h2 style="text-align:center;margin-bottom:18px;">Leaderboard</h2>
+            <ol id="leaderboard-list" style="padding-left:24px;list-style:decimal inside;font-size:1.1em;">
+            </ol>
+        </section>
+    </main>
+
+    <footer>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6480692859796192"
+            crossorigin="anonymous"></script>
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-6480692859796192"
+            data-ad-slot="5049938623"
+            data-ad-format="auto"></ins>
     </main>
 
     <footer>
@@ -85,8 +101,9 @@
     </footer>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDSpebs9nP97-IkXXGALGR2vCqcTTOzlyo",
@@ -101,24 +118,94 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
+
+    const db = getFirestore(app);
+        // --- Time Tracking Leaderboard ---
+        let sessionStart = Date.now();
+        let sessionSeconds = 0;
+        let currentUser = null;
+
+        // Save or update user's total time in Firestore
+        async function saveUserTime(uid, email, secondsToAdd) {
+            try {
+                const userRef = doc(db, "leaderboard", uid);
+                const userSnap = await getDoc(userRef);
+                let totalSeconds = secondsToAdd;
+                if (userSnap.exists()) {
+                    const data = userSnap.data();
+                    totalSeconds += data.totalSeconds || 0;
+                }
+                await setDoc(userRef, {
+                    uid: uid,
+                    email: email,
+                    totalSeconds: totalSeconds
+                });
+                loadLeaderboard();
+            } catch (e) {
+                console.error("Error saving time:", e);
+            }
+        }
+
+        async function loadLeaderboard() {
+            const leaderboardList = document.getElementById("leaderboard-list");
+            leaderboardList.innerHTML = "<li>Loading...</li>";
+            try {
+                const q = query(collection(db, "leaderboard"), orderBy("totalSeconds", "desc"), limit(10));
+                const querySnapshot = await getDocs(q);
+                leaderboardList.innerHTML = "";
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const mins = Math.floor((data.totalSeconds || 0) / 60);
+                    const secs = (data.totalSeconds || 0) % 60;
+                    leaderboardList.innerHTML += `<li><strong>${data.email || data.uid}</strong>: ${mins}m ${secs}s</li>`;
+                });
+                if (leaderboardList.innerHTML === "") {
+                    leaderboardList.innerHTML = "<li>No time tracked yet.</li>";
+                }
+            } catch (e) {
+                leaderboardList.innerHTML = `<li>Error loading leaderboard: ${e}</li>`;
+            }
+        }
         onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            sessionStart = Date.now();
+            sessionSeconds = 0;
             if (user) {
                 document.getElementById("login-container").style.display = "none";
                 document.getElementById("profile-container").style.display = "inline-block";
                 document.getElementById("user-email").textContent = user.email;
+                loadLeaderboard();
             } else {
                 document.getElementById("login-container").style.display = "inline-block";
                 document.getElementById("profile-container").style.display = "none";
+                loadLeaderboard();
             }
         });
 
-        document.getElementById("logout-button").addEventListener("click", () => {
-            signOut(auth).then(() => {
-                window.location.href = "index.html";
-            }).catch((error) => {
-                console.error("Logout error:", error);
-            });
+
+        window.addEventListener("beforeunload", () => {
+            if (currentUser) {
+                const now = Date.now();
+                const seconds = Math.floor((now - sessionStart) / 1000);
+                if (seconds > 0) {
+              
+                    navigator.sendBeacon = navigator.sendBeacon || function(){}; // fallback
+                    saveUserTime(currentUser.uid, currentUser.email, seconds);
+                }
+            }
         });
+
+ 
+        setInterval(() => {
+            if (currentUser) {
+                const now = Date.now();
+                const seconds = Math.floor((now - sessionStart) / 1000) - sessionSeconds;
+                if (seconds > 0) {
+                    saveUserTime(currentUser.uid, currentUser.email, seconds);
+                    sessionSeconds += seconds;
+                }
+            }
+        }, 60000);
     </script>
 </body>
 </html>
