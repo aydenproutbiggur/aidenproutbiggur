@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="css/styles.css"/>
 <!DOCTYPE HTML>
+<html lang="en">
 <head>
-    <title>Game</title>
+    <title>Polytrack</title>
 </head>
 <body>
     <header>
@@ -15,32 +16,41 @@
             <a href="contact.html">Contact</a>
             <a href="donate.html">Donate</a>
         </nav>
-         <div class="login-container" id="login-container">
+
+        <!-- Login / Profile -->
+        <div class="login-container" id="login-container">
             <button id="login-button">
                 <a href="login.html" id="login">Log In</a>
             </button>
         </div>
-
         <div id="profile-container" style="display:none;">
             <span id="user-email" style="margin-right:10px; font-weight:bold;"></span>
             <button id="logout-button">Log Out</button>
         </div>
 
-        <div class="search-container">
-            <input type="text" placeholder="Search games..." id="search-input">
-            <button id="search-button">Search</button>
+        <!-- Favorite Button -->
+        <div style="text-align:center; margin-top:20px;">
+            <button id="favorite-button">Add to Favorites</button>
         </div>
     </header>
-    <iframe src="https://openprocessing.org/sketch/2630795/embed"
-        width="800"
-        height="600"
-        frameborder="0"
-        allowfullscreen>
-</iframe>
-         <script type="module">
+
+    <!-- Game Embed -->
+    <main style="text-align:center; margin-top:20px;">
+        <iframe src="https://openprocessing.org/sketch/2630795/embed"
+            width="800"
+            height="600"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+    </main>
+
+    <!-- Firebase Script -->
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+        // Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyDSpebs9nP97-IkXXGALGR2vCqcTTOzlyo",
             authDomain: "ghoatygames.firebaseapp.com",
@@ -53,18 +63,40 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
+        // Handle auth state
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById("login-container").style.display = "none";
                 document.getElementById("profile-container").style.display = "inline-block";
                 document.getElementById("user-email").textContent = user.email;
+
+                // Favorite button logic
+                const favBtn = document.getElementById("favorite-button");
+                favBtn.addEventListener("click", async () => {
+                    try {
+                        const favRef = doc(db, "users", user.uid, "favorites", "polytrack");
+                        await setDoc(favRef, {
+                            title: "Polytrack",
+                            image: "Images/polytrack.png", // update with correct thumbnail path
+                            url: "polytrack.html",
+                            addedAt: new Date()
+                        });
+                        alert("Polytrack added to your Favorites!");
+                    } catch (err) {
+                        console.error("Error adding favorite:", err);
+                        alert("Failed to add favorite.");
+                    }
+                });
+
             } else {
                 document.getElementById("login-container").style.display = "inline-block";
                 document.getElementById("profile-container").style.display = "none";
             }
         });
 
+        // Logout
         document.getElementById("logout-button").addEventListener("click", () => {
             signOut(auth).then(() => {
                 window.location.href = "dts_ghostygames_website.html";
@@ -73,3 +105,7 @@
             });
         });
     </script>
+
+    <script type="module" src="tracker.js"></script>
+</body>
+</html>

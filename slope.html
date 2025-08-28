@@ -1,24 +1,20 @@
 <link rel="stylesheet" href="css/styles.css"/>
 <!DOCTYPE HTML>
 <head>
-    <title>Editors Pick </title>
+    <title>Slope Game</title>
 </head>
 <body>
     <header>
         <a href="index.html">
             <img src="Images/NEWGhostyGames.png" class="logo" alt="Logo" style="width:180px;height:150px;">
         </a>
-        <h1>Editors Pick</h1>
+        <h1>Slope Game</h1>
         <nav>
-           <a href="index.html">Home</a>
+            <a href="index.html">Home</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
             <a href="donate.html">Donate</a>
         </nav>
-        <div class="search-container">
-            <input type="text" placeholder="Search games..." id="search-input">
-            <button id="search-button">Search</button>
-        </div>
          <div class="login-container" id="login-container">
             <button id="login-button">
                 <a href="login.html" id="login">Log In</a>
@@ -30,66 +26,20 @@
             <button id="logout-button">Log Out</button>
         </div>
 
+        <div class="search-container">
+            <input type="text" placeholder="Search games..." id="search-input">
+            <button id="search-button">Search</button>
+        </div>
+        
     </header>
-    <main>
-        <h2>Editors Pick</h2>
-        <p>Check out our <strong>Editors Picks!</strong></p>
-
-<div class="games-grid">
-<a class="game-card" href="Teritorial.html">
-<img src="Images/teritorial.png"  alt="Teritorial">
-<h3>Teritorial</h3>
-<p>This Game is all about strategy and territory control!</p>
-</a>
-<a class="game-card" href="Tetris.html">
-<img src="Images/tetris.png" alt="Tetris">
-<h3>Tetris</h3>
-<p>Classic puzzle game where you fit falling blocks together.</p>
-</a>
-<a class="game-card" href="spaceinvaders.html">
-<img src="Images/spaceinvaders.png" alt="spaceinvaders">
-<h3>Invading Space</h3>
-<p>Classic arcade game where you defend against waves of aliens.</p>
-</a>
-<a class="game-card" href="Snake.html">
-<img src="Images/snake.png" alt="Snake">
-<h3>Snake</h3>
-<p>Eat food, grow longer, and avoid hitting yourself in this classic game.</p>
-</a>
-<a class="game-card" href="polytrack.html">
-<img src="Images/polytrack.png" alt="Polytrack">
-<h3>Polytrack</h3>
-<p>Race on a dynamic track and avoid obstacles in this thrilling game.</p>
-</a>
-<a class="game-card" href="2048.html">
-<img src="Images/2048.png" alt="2048">
-<h3>2048</h3>
-<p>Combine tiles to reach 2048 in this popular puzzle game.</p>
-</a>
-<a class="game-card" href="minesweeper.html">
-<img src="Images/minesweeper.png" alt="Minesweeper">
-<h3>Minesweeper</h3>
-<p>Uncover all the safe squares without detonating any mines!</p>
-</a>
-<a class="game-card" href="breakout.html">
-<img src="Images/breakout.png" alt="Breakout">
-<h3>Breakout</h3>
-<p>Bounce the ball to break all the bricks in this arcade classic.</p>
-</a>
-<a class="game-card" href="pong.html">
-<img src="Images/pong.png" alt="Pong">
-<h3>Pong</h3>
-<p>Challenge a friend or the computer in this table tennis game.</p>
-</a>
-<a class="game-card" href="dino.html">
-<img src="Images/dino.png" alt="Dino Run">
-<h3>Dino Run</h3>
-<p>Jump over obstacles and run as far as you can!</p>
-</a>
-</div>
-</main>
-    </main>
-    <footer>
+    <iframe src="https://openprocessing.org/sketch/2678317/embed"
+        width="800"
+        height="600"
+        frameborder="0"
+        allowfullscreen>
+        
+</iframe>
+<footer>
          <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -127,4 +77,7 @@
         });
     </script>
      <script type="module" src="tracker.js"></script>
-    </footer>
+</footer>
+
+
+
