@@ -71,14 +71,14 @@
                 const favBtn = document.getElementById("favorite-button");
                 favBtn.addEventListener("click", async () => {
                     try {
-                        const favRef = doc(db, "users", user.uid, "favorites", "polytrack");
+                        const favRef = doc(db, "users", user.uid, "favorites", "geometrydash");
                         await setDoc(favRef, {
-                            title: "Polytrack",
-                            image: "Images/polytrack.png", 
-                            url: "polytrack.html",
+                            title: "geometrydash",
+                            image: "Images/geometrydash.png", 
+                            url: "geometrydash.html",
                             addedAt: new Date()
                         });
-                        alert("Polytrack added to your Favorites!");
+                        alert("geometrydash added to your Favorites!");
                     } catch (err) {
                         console.error("Error adding favorite:", err);
                         alert("Failed to add favorite.");
