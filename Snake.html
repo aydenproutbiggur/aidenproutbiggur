@@ -28,9 +28,8 @@
             <button id="logout-button">Log Out</button>
         </div>
 
-        <div class="search-container">
-            <input type="text" placeholder="Search games..." id="search-input">
-            <button id="search-button">Search</button>
+        <div style="text-align:center; margin-top:20px;">
+            <button id="favorite-button">Add to Favorites</button>
         </div>
     </header>
     <iframe src="https://openprocessing.org/sketch/2667763/embed"
@@ -39,9 +38,11 @@
         frameborder="0"
         allowfullscreen>
 </iframe>
-         <script type="module">
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
 
         const firebaseConfig = {
             apiKey: "AIzaSyDSpebs9nP97-IkXXGALGR2vCqcTTOzlyo",
@@ -55,12 +56,33 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
+       
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById("login-container").style.display = "none";
                 document.getElementById("profile-container").style.display = "inline-block";
                 document.getElementById("user-email").textContent = user.email;
+
+                
+                const favBtn = document.getElementById("favorite-button");
+                favBtn.addEventListener("click", async () => {
+                    try {
+                        const favRef = doc(db, "users", user.uid, "favorites", "Snake");
+                        await setDoc(favRef, {
+                            title: "Snake",
+                            image: "Images/snake.png", 
+                            url: "Snake.html",
+                            addedAt: new Date()
+                        });
+                        alert("Snake added to your Favorites!");
+                    } catch (err) {
+                        console.error("Error adding favorite:", err);
+                        alert("Failed to add favorite.");
+                    }
+                });
+
             } else {
                 document.getElementById("login-container").style.display = "inline-block";
                 document.getElementById("profile-container").style.display = "none";
@@ -75,3 +97,4 @@
             });
         });
     </script>
+    <script type="module" src="session.js"></script>

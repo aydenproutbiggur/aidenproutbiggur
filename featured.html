@@ -25,10 +25,14 @@
             </button>
         </div>
 
-        <div id="profile-container" style="display:none;">
-            <span id="user-email" style="margin-right:10px; font-weight:bold;"></span>
-            <button id="logout-button">Log Out</button>
-        </div>
+        <div id="profile-container" style="display:none;" class="profile-dropdown">
+      <button class="profile-btn" id="profile-btn">Profile ▼</button>
+      <div class="profile-menu" id="profile-menu">
+        <p><strong>Email:</strong> <span id="profile-email"></span></p>
+        <input type="text" id="username-prefix" placeholder="Enter custom username">
+        <button class="save-btn" id="save-username">Save Username</button>
+        <button class="logout-btn" id="logout-button">Log Out</button>
+      </div>
 
     </header>
     <main>
@@ -90,42 +94,77 @@
 </main>
     </main>
     <footer>
-         <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+            <script type="module">
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+                import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+                import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDSpebs9nP97-IkXXGALGR2vCqcTTOzlyo",
-            authDomain: "ghoatygames.firebaseapp.com",
-            projectId: "ghoatygames",
-            storageBucket: "ghoatygames.firebasestorage.app",
-            messagingSenderId: "606779515816",
-            appId: "1:606779515816:web:774ccc3cd8d7f895f7339d",
-            measurementId: "G-CCE1LRLR46"
-        };
+                const firebaseConfig = {
+                    apiKey: "AIzaSyDSpebs9nP97-IkXXGALGR2vCqcTTOzlyo",
+                    authDomain: "ghoatygames.firebaseapp.com",
+                    projectId: "ghoatygames",
+                    storageBucket: "ghoatygames.firebasestorage.app",
+                    messagingSenderId: "606779515816",
+                    appId: "1:606779515816:web:774ccc3cd8d7f895f7339d",
+                    measurementId: "G-CCE1LRLR46"
+                };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+                const app = initializeApp(firebaseConfig);
+                const auth = getAuth(app);
+                const db = getFirestore(app);
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById("login-container").style.display = "none";
-                document.getElementById("profile-container").style.display = "inline-block";
-                document.getElementById("user-email").textContent = user.email;
-            } else {
-                document.getElementById("login-container").style.display = "inline-block";
-                document.getElementById("profile-container").style.display = "none";
-            }
-        });
+                let username = null;
 
-        document.getElementById("logout-button").addEventListener("click", () => {
-            signOut(auth).then(() => {
-                window.location.href = "dts_ghostygames_website.html";
-            }).catch((error) => {
-                console.error("Logout error:", error);
-            });
-        });
-    </script>
-    <script type="module" src="tracker.js"></script>
+                async function loadUsername(user) {
+                    try {
+                        const userRef = doc(db, "leaderboard", user.uid);
+                        const userSnap = await getDoc(userRef);
+                        if (userSnap.exists()) {
+                            username = userSnap.data().username || null;
+                        } else {
+                            username = null;
+                        }
+                    } catch (e) {
+                        username = null;
+                    }
+                }
 
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        await loadUsername(user);
+                        document.getElementById("login-container").style.display = "none";
+                        document.getElementById("profile-container").style.display = "inline-block";
+                        document.getElementById("profile-btn").textContent = (username || user.email) + " ▼";
+                        document.getElementById("profile-email").textContent = user.email;
+                    } else {
+                        document.getElementById("login-container").style.display = "inline-block";
+                        document.getElementById("profile-container").style.display = "none";
+                    }
+                });
+
+                document.getElementById("profile-btn").addEventListener("click", () => {
+                    document.getElementById("profile-container").classList.toggle("active");
+                });
+
+                document.getElementById("save-username").addEventListener("click", async () => {
+                    const user = auth.currentUser;
+                    if (user) {
+                        username = document.getElementById("username-prefix").value.trim();
+                        if (username) {
+                            try {
+                                await setDoc(doc(db, "leaderboard", user.uid), { username: username }, { merge: true });
+                                document.getElementById("profile-btn").textContent = username + " ▼";
+                                alert("Username saved");
+                            } catch (err) {
+                                alert("Failed to save username");
+                            }
+                        }
+                    }
+                });
+                document.getElementById("logout-button").addEventListener("click", async () => {
+                    await signOut(auth);
+                    location.reload();
+                });
+            </script>
+<script type="module" src="session.js"></script>
     </footer>

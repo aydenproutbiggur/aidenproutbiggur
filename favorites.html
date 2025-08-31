@@ -74,30 +74,30 @@
                         const game = favDoc.data();
 
                         const card = document.createElement("div");
-                        card.style.width = "200px";
+                        card.style.width = "165px";
                         card.style.border = "1px solid #ccc";
                         card.style.padding = "10px";
                         card.style.borderRadius = "10px";
-                        card.style.background = "#fff";
+                        card.style.background = "#282b33";
                         card.style.boxShadow = "0 2px 5px rgba(0,0,0,0.1)";
 
                         const img = game.image ? game.image : "Images/default-thumbnail.png";
 
                         card.innerHTML = `
                             <img src="${img}" alt="${game.title}" style="width:100%; height:120px; object-fit:cover; border-radius:8px;">
-                            <h3>${game.title}</h3>
-                            <a href="${game.url}" style="display:inline-block; margin-top:10px;">Play Now</a>
+                            <h3><b>${game.title}</b></h3>
+                            <a href="${game.url}" style="display:inline-block; margin-top:10px; color:#fff; "><b>Play Now</b></a>
                             <button style="margin-top:10px; background:#282b33; color:#fff; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">
                                 Remove
                             </button>
                         `;
 
-                        // Attach remove button handler
+                   
                         card.querySelector("button").addEventListener("click", async () => {
                             try {
                                 await deleteDoc(doc(db, "users", user.uid, "favorites", favDoc.id));
                                 alert(`${game.title} removed from Favorites.`);
-                                loadFavorites(user); // reload list
+                                loadFavorites(user); 
                             } catch (err) {
                                 console.error("Error removing favorite:", err);
                                 alert("Failed to remove favorite.");

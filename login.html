@@ -63,7 +63,7 @@
   </div>
 
   <script type="module">
-    // Firebase v12.1.0 imports
+   
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
     import { 
@@ -74,7 +74,7 @@
       signInWithPopup 
     } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-    // Your Firebase config
+  
     const firebaseConfig = {
       apiKey: "AIzaSyDSpebs9nP97-IkXXGALGR2vCqcTTOzlyo",
       authDomain: "ghoatygames.firebaseapp.com",
@@ -85,13 +85,13 @@
       measurementId: "G-CCE1LRLR46"
     };
 
-    // Initialize Firebase
+ 
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // Login
+
     document.getElementById("loginBtn").addEventListener("click", () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
@@ -105,7 +105,7 @@
         .catch(error => document.getElementById("message").innerText = error.message);
     });
 
-    // Sign up
+ 
     document.getElementById("signupBtn").addEventListener("click", () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;

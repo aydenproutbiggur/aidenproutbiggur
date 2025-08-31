@@ -26,9 +26,8 @@
             <button id="logout-button">Log Out</button>
         </div>
 
-        <div class="search-container">
-            <input type="text" placeholder="Search games..." id="search-input">
-            <button id="search-button">Search</button>
+        <div style="text-align:center; margin-top:20px;">
+            <button id="favorite-button">Add to Favorites</button>
         </div>
     </header>
     <iframe src="https://openprocessing.org/sketch/313016/embed"
@@ -37,9 +36,11 @@
         frameborder="0"
         allowfullscreen>
 </iframe>
-         <script type="module">
+       <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
 
         const firebaseConfig = {
             apiKey: "AIzaSyDSpebs9nP97-IkXXGALGR2vCqcTTOzlyo",
@@ -53,12 +54,33 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
+       
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById("login-container").style.display = "none";
                 document.getElementById("profile-container").style.display = "inline-block";
                 document.getElementById("user-email").textContent = user.email;
+
+                
+                const favBtn = document.getElementById("favorite-button");
+                favBtn.addEventListener("click", async () => {
+                    try {
+                        const favRef = doc(db, "users", user.uid, "favorites", "Tetris");
+                        await setDoc(favRef, {
+                            title: "Tetris",
+                            image: "Images/tetris.png", 
+                            url: "Tetris.html",
+                            addedAt: new Date()
+                        });
+                        alert("Tetris added to your Favorites!");
+                    } catch (err) {
+                        console.error("Error adding favorite:", err);
+                        alert("Failed to add favorite.");
+                    }
+                });
+
             } else {
                 document.getElementById("login-container").style.display = "inline-block";
                 document.getElementById("profile-container").style.display = "none";
@@ -73,24 +95,5 @@
             });
         });
     </script>
- <script type="module" src="tracker.js"></script>
-    <main>
-        <h2>About Tetris</h2>
-        <p>Tetris is a classic puzzle game where players must fit falling blocks together to clear lines and score points. The game ends when the blocks stack up to the top of the screen.</p>
-        <h2>How to Play</h2>
-        <ul>
-            <li>Use the arrow keys to move and rotate the falling blocks.</li>
-            <li>Complete horizontal lines to clear them from the screen.</li>
-            <li>The game speeds up as you clear more lines, so stay alert!</li>
-        </ul>
-        <h2>Game Controls</h2>
-        <ul>
-            <li><strong>Left Arrow:</strong> Move block left</li>
-            <li><strong>Right Arrow:</strong> Move block right</li>
-            <li><strong>Up Arrow:</strong> Rotate block</li>
-            <li><strong>Down Arrow:</strong> Speed up block descent</li>
-        </ul>
-        <h2>High Scores</h2>
-        <p>Try to beat your high score! The higher the score, the better you are at Tetris!</p>
-        <h2>Other Games You Might Like</h2>
-        <div class="game-grid">
+<script type="module" src="session.js"></script>
+
