@@ -1,7 +1,7 @@
-/* Make sure the site respects device width */
+
 html {
   box-sizing: border-box;
-  font-size: 16px; /* base scaling */
+  font-size: 16px; 
 }
 *, *:before, *:after {
   box-sizing: inherit;
@@ -15,7 +15,7 @@ body {
   padding: 0;
 }
  
-/* Header */
+
 header {
   background: url('header2.png') center/cover no-repeat, #23283a;
   padding: 2rem 1rem;
@@ -24,14 +24,14 @@ header {
   position: relative;
 }
 header h1 {
-  font-size: clamp(1.8rem, 4vw, 2.5rem); /* scales with screen */
+  font-size: clamp(1.8rem, 4vw, 2.5rem); 
   letter-spacing: 2px;
   color: #ffffff;
   margin: 0;
   text-shadow: 3px 2px 8px #0008;
 }
  
-/* Nav */
+
 nav {
   margin: 1rem 0;
 }
@@ -47,7 +47,7 @@ nav a:hover {
   color: #fff;
 }
  
-/* Main content */
+
 main {
   max-width: 1200px;
   width: 90%;
@@ -58,7 +58,7 @@ main {
   box-shadow: 0 4px 24px rgba(0,0,0,0.3);
 }
  
-/* Games grid responsive */
+
 .games-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -66,7 +66,7 @@ main {
   margin-top: 2rem;
 }
  
-/* Game cards */
+
 .game-card {
   background: #282b33;
   border-radius: 8px;
@@ -97,7 +97,7 @@ main {
   color: #c0c0c0;
 }
  
-/* Footer */
+
 footer {
   text-align: center;
   padding: 1.5rem 1rem;
@@ -114,7 +114,7 @@ footer a:hover {
   text-decoration: underline;
 }
  
-/* Logo */
+
 .logo {
   position: absolute;
   top: 0.5rem;
@@ -129,7 +129,7 @@ footer a:hover {
   transform: scale(1.05);
 }
  
-/* Iframe responsive */
+
 iframe {
   border: none;
   border-radius: 12px;
@@ -140,7 +140,7 @@ iframe {
   height: 70vh;
 }
  
-/* Login/Profile container */
+
 .login-container,
 #profile-container {
   position: absolute;
@@ -156,7 +156,7 @@ iframe {
   box-shadow: 0px 3px 8px rgba(0,0,0,0.2);
 }
  
-/* Buttons */
+
 .login-container button,
 #logout-button,
 .donate-button button {
@@ -177,7 +177,7 @@ iframe {
   transform: translateY(-2px);
 }
  
-/* Leaderboard */
+
 #leaderboard-section {
   position: fixed;
   right: 1%;
@@ -193,7 +193,7 @@ iframe {
   font-size: clamp(0.8rem, 1.5vw, 1rem);
 }
  
-/* Profile menu */
+
 .profile-dropdown {
   position: relative;
   display: inline-block;
