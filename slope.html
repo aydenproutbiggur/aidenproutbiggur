@@ -21,10 +21,15 @@
             </button>
         </div>
 
-        <div id="profile-container" style="display:none;">
-            <span id="user-email" style="margin-right:10px; font-weight:bold;"></span>
-            <button id="logout-button">Log Out</button>
-        </div>
+                <div id="profile-container" style="display:none;" class="profile-dropdown">
+                    <button class="profile-btn" id="profile-btn">Profile ▼</button>
+                    <div class="profile-menu" id="profile-menu">
+                        <p><strong>Email:</strong> <span id="profile-email"></span></p>
+                        <input type="text" id="username-prefix" placeholder="Enter custom username">
+                        <button class="save-btn" id="save-username">Save Username</button>
+                        <button class="logout-btn" id="logout-button">Log Out</button>
+                    </div>
+                </div>
 
         <div style="text-align:center; margin-top:20px;">
             <button id="favorite-button">Add to Favorites</button>
@@ -60,13 +65,20 @@
         const db = getFirestore(app);
 
        
-        onAuthStateChanged(auth, (user) => {
+        let username = null;
+
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 document.getElementById("login-container").style.display = "none";
                 document.getElementById("profile-container").style.display = "inline-block";
-                document.getElementById("user-email").textContent = user.email;
-
-                
+                document.getElementById("profile-email").textContent = user.email;
+                const userRef = doc(db, "leaderboard", user.uid);
+                const userSnap = await getDoc(userRef);
+                if (userSnap.exists()) {
+                    username = userSnap.data().username || null;
+                    document.getElementById("profile-btn").textContent = (username || user.email) + " ▼";
+                }
+                // Favorite button logic
                 const favBtn = document.getElementById("favorite-button");
                 favBtn.addEventListener("click", async () => {
                     try {
@@ -83,19 +95,35 @@
                         alert("Failed to add favorite.");
                     }
                 });
-
             } else {
                 document.getElementById("login-container").style.display = "inline-block";
                 document.getElementById("profile-container").style.display = "none";
             }
         });
 
-        document.getElementById("logout-button").addEventListener("click", () => {
-            signOut(auth).then(() => {
-                window.location.href = "dts_ghostygames_website.html";
-            }).catch((error) => {
-                console.error("Logout error:", error);
-            });
+        document.getElementById("profile-btn").addEventListener("click", () => {
+            document.getElementById("profile-container").classList.toggle("active");
+        });
+
+        document.getElementById("save-username").addEventListener("click", async () => {
+            const user = auth.currentUser;
+            if (user) {
+                username = document.getElementById("username-prefix").value.trim();
+                if (username) {
+                    try {
+                        await setDoc(doc(db, "leaderboard", user.uid), { username: username }, { merge: true });
+                        document.getElementById("profile-btn").textContent = username + " ▼";
+                        alert("Username saved");
+                    } catch (err) {
+                        alert("Failed to save username");
+                    }
+                }
+            }
+        });
+
+        document.getElementById("logout-button").addEventListener("click", async () => {
+            await signOut(auth);
+            location.reload();
         });
     </script>
      <script type="module" src="session.js"></script>

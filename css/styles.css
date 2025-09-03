@@ -195,7 +195,7 @@ iframe {
 }
 
 #leaderboard-section {
-  position: fixed;
+  position: absolute;
   right: 1%;
   top: 230px;
   width: clamp(240px, 25%, 300px);
