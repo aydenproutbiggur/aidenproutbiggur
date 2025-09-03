@@ -286,3 +286,12 @@ iframe {
   transform: translateY(-2px) scale(1.04);
 }
 
+a {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+a:hover, a:active, a:focus {
+  text-decoration: none;
+}
