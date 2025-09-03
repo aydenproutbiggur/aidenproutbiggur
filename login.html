@@ -119,7 +119,7 @@
         .catch(error => document.getElementById("message").innerText = error.message);
     });
 
-    // Google login
+
     document.getElementById("googleBtn").addEventListener("click", () => {
       signInWithPopup(auth, provider)
         .then(() => {

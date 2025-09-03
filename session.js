@@ -4,7 +4,7 @@ import {
     getFirestore, doc, setDoc, getDoc, collection, query, orderBy, limit, onSnapshot 
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-// --- Firebase Config ---
+
 const firebaseConfig = {
     apiKey: "AIzaSyDSpebs9nP97-IkXXGALGR2vCqcTTOzlyo",
     authDomain: "ghoatygames.firebaseapp.com",
@@ -19,13 +19,12 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// --- Timer Vars ---
 let currentUser = null;
 let lastTick = Date.now();
 let activeSeconds = 0;
 let unsavedSeconds = 0;
 
-// --- Format time nicely ---
+
 function formatTime(total) {
     const h = Math.floor(total / 3600);
     const m = Math.floor((total % 3600) / 60);
@@ -33,7 +32,7 @@ function formatTime(total) {
     return `${h}h ${m}m ${s}s`;
 }
 
-// --- Update display ---
+
 function updateYourTimeDisplay() {
     const el = document.getElementById("your-time");
     if (el) {
@@ -41,7 +40,7 @@ function updateYourTimeDisplay() {
     }
 }
 
-// --- Save user’s session to leaderboard ---
+
 async function saveUserTime(uid, email, secondsToAdd) {
     try {
         const userRef = doc(db, "leaderboard", uid);
@@ -64,10 +63,10 @@ async function saveUserTime(uid, email, secondsToAdd) {
     }
 }
 
-// --- Real-time leaderboard ---
+
 function startLeaderboardListener() {
     const leaderboardList = document.getElementById("leaderboard-list");
-    if (!leaderboardList) return; // don’t break if leaderboard isn’t on this page
+    if (!leaderboardList) return; 
 
     const q = query(collection(db, "leaderboard"), orderBy("totalSeconds", "desc"), limit(10));
     onSnapshot(q, (snapshot) => {
@@ -82,7 +81,7 @@ function startLeaderboardListener() {
     });
 }
 
-// --- Timer tick ---
+
 setInterval(() => {
     if (currentUser && document.hasFocus()) {
         const now = Date.now();
@@ -101,7 +100,7 @@ setInterval(() => {
     }
 }, 1000);
 
-// --- Auth listener ---
+
 onAuthStateChanged(auth, (user) => {
     currentUser = user;
     lastTick = Date.now();
@@ -113,11 +112,11 @@ onAuthStateChanged(auth, (user) => {
         }
         startLeaderboardListener();
     } else {
-        startLeaderboardListener(); // still show leaderboard to guests
+        startLeaderboardListener(); 
     }
 });
 
-// --- Save unsaved time before leaving page ---
+
 window.addEventListener("beforeunload", () => {
     if (currentUser && unsavedSeconds > 0) {
         saveUserTime(currentUser.uid, currentUser.email, unsavedSeconds);
