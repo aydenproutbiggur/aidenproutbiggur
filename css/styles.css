@@ -214,7 +214,7 @@ iframe {
 }
 
 #leaderboard-list li {
-  background: #ffffff;
+  background: linear-gradient(135deg, #ffffff 67%, #bebebe 100%);
   border-radius: 8px;
   padding: 1rem 1.5rem;
   min-width: 160px;
