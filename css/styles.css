@@ -49,7 +49,7 @@ nav a:hover {
  
 
 main {
-  max-width: 1200px;
+  max-width: 1300px;
   width: 90%;
   margin: 2rem auto;
   padding: 2rem;
@@ -64,6 +64,10 @@ main {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
+  justify-content: center;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
  
 
@@ -71,6 +75,7 @@ main {
   background: #282b33;
   border-radius: 8px;
   padding: 1rem;
+
   text-align: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   transition: transform 0.2s;
@@ -96,7 +101,9 @@ main {
   font-size: clamp(0.8rem, 1.5vw, 0.95rem);
   color: #c0c0c0;
 }
- 
+h1, p, h2, h3, h4, h5, h6 {
+  text-align: center;
+}
 
 footer {
   text-align: center;
@@ -179,39 +186,67 @@ iframe {
 }
  
 
-#leaderboard-section {
-  position: absolute;
-  right: 1%;
-  top: 230px;
-  width: clamp(240px, 25%, 300px);
-  padding: 1rem;
-  background: #282b33;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(255, 255, 255, 0.3);
-  z-index: 1000;
-  max-height: 70vh;
-  overflow-y: auto;
-  font-size: clamp(0.8rem, 1.5vw, 1rem);
-}
 
 #leaderboard-section {
-  position: absolute;
-  right: 1%;
-  top: 230px;
-  width: clamp(240px, 25%, 300px);
-  padding: 1rem;
+  grid-column: 1 / -1;
   background: #282b33;
+  padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 12px rgba(255,255,255,0.15);
+  margin-top: 1.5rem;
+  max-width: 900px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   z-index: 1000;
-  max-height: 70vh;
-  overflow-y: auto;
-  font-size: clamp(0.8rem, 1.5vw, 1rem);
+}
+
+#leaderboard-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#leaderboard-list li {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  min-width: 160px;
+  text-align: center;
+  color: #000000;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  font-weight: 500;
+}
+
+#leaderboard-list li:nth-child(1) {
+  background: linear-gradient(135deg, #ffd700 70%, #fffbe6 100%);
+  color: #23283a;
+  font-weight: bold;
+  border: 2px solid #ffd700;
+}
+#leaderboard-list li:nth-child(2) {
+  background: linear-gradient(135deg, #c0c0c0 70%, #f8f8ff 100%);
+  color: #23283a;
+  font-weight: bold;
+  border: 2px solid #c0c0c0;
+}
+#leaderboard-list li:nth-child(3) {
+  background: linear-gradient(135deg, #cd7f32 70%, #fff3e0 100%);
+  color: #23283a;
+  font-weight: bold;
+  border: 2px solid #cd7f32;
 }
 
 @media (max-width: 900px) {
   #leaderboard-section {
-    position: static;
+    grid-column: 1 / -1;
     width: 100%;
     max-width: 100%;
     margin: 2rem auto 0 auto;
