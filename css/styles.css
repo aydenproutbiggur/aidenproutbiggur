@@ -158,10 +158,10 @@ iframe {
  
 
 .login-container button,
-#logout-button,
 .donate-button button {
   background: #ffffff;
   color: #000000;
+  text-decoration: #fff;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 6px;

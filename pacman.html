@@ -1,100 +1,42 @@
 <link rel="stylesheet" href="css/styles.css"/>
 <!DOCTYPE HTML>
 <head>
-    <title>Featured Games</title>
+    <title>Pacman</title>
 </head>
 <body>
     <header>
         <a href="index.html">
             <img src="Images/NEWGhostyGames.png" class="logo" alt="Logo" style="width:180px;height:150px;">
         </a>
-        <h1>Featured Games</h1>
+        <h1>Pacman</h1>
         <nav>
-           <a href="index.html">Home</a>
+            <a href="index.html">Home</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
             <a href="donate.html">Donate</a>
         </nav>
-        <div class="search-container">
-            <input type="text" placeholder="Search games..." id="search-input">
-            <button id="search-button">Search</button>
-        </div>
          <div class="login-container" id="login-container">
             <button id="login-button">
                 <a href="login.html" id="login">Log In</a>
             </button>
         </div>
 
-        <div id="profile-container" style="display:none;" class="profile-dropdown">
-      <button class="profile-btn" id="profile-btn">Profile ▼</button>
-      <div class="profile-menu" id="profile-menu">
-        <p><strong>Email:</strong> <span id="profile-email"></span></p>
-        <input type="text" id="username-prefix" placeholder="Enter custom username">
-        <button class="save-btn" id="save-username">Save Username</button>
-        <button class="logout-btn" id="logout-button">Log Out</button>
-      </div>
+        <div id="profile-container" style="display:none;">
+            <span id="user-email" style="margin-right:10px; font-weight:bold;"></span>
+            <button id="logout-button">Log Out</button>
+        </div>
 
+        <div style="text-align:center; margin-top:20px;">
+            <button id="favorite-button">Add to Favorites</button>
+        </div>
     </header>
-    <main>
-        <h2>Featured Games</h2>
-        <p>Check out our latest and most popular games!</p>
-
-<div class="games-grid">
-<a class="game-card" href="Teritorial.html">
-<img src="Images/teritorial.png"  alt="Teritorial">
-<h3>Teritorial</h3>
-<p>This Game is all about strategy and territory control!</p>
-</a>
-<a class="game-card" href="Tetris.html">
-<img src="Images/tetris.png" alt="Tetris">
-<h3>Tetris</h3>
-<p>Classic puzzle game where you fit falling blocks together.</p>
-</a>
-<a class="game-card" href="spaceinvaders.html">
-<img src="Images/spaceinvaders.png" alt="spaceinvaders">
-<h3>Invading Space</h3>
-<p>Classic arcade game where you defend against waves of aliens.</p>
-</a>
-<a class="game-card" href="Snake.html">
-<img src="Images/snake.png" alt="Snake">
-<h3>Snake</h3>
-<p>Eat food, grow longer, and avoid hitting yourself in this classic game.</p>
-</a>
-<a class="game-card" href="polytrack.html">
-<img src="Images/polytrack.png" alt="Polytrack">
-<h3>Polytrack</h3>
-<p>Race on a dynamic track and avoid obstacles in this thrilling game.</p>
-</a>
-<a class="game-card" href="slope.html">
-<img src="Images/slope.png" alt="Slope">
-<h3>Slope</h3>
-<p>Race down a diverse track with many obistcals with varing dificualty.</p>
-</a>
-<a class="game-card" href="geometrydash.html">
-<img src="Images/geometrydash.png" alt="geometrydash">
-<h3>Geometrydash</h3>
-<p>Blast through levels with extreme precision and focus without being eliminated!</p>
-</a>
-<a class="game-card" href="pacman.html">
-<img src="Images/pacman.png" alt="Pacman">
-<h3>Pacman</h3>
-<p>Pacman is a game where you have to eat as much as you can without being killed by the ghosts</p>
-</a>
-<a class="game-card" href="pong.html">
-<img src="Images/pong.png" alt="Pong">
-<h3>Pong</h3>
-<p>Challenge a friend or the computer in this table tennis game.</p>
-</a>
-<a class="game-card" href="dino.html">
-<img src="Images/dino.png" alt="Dino Run">
-<h3>Dino Run</h3>
-<p>Jump over obstacles and run as far as you can!</p>
-</a>
-</div>
-</main>
-    </main>
-    <footer>
-            <script type="module">
+    <iframe src="https://openprocessing.org/sketch/2542608/embed"
+        width="800"
+        height="600"
+        frameborder="0"
+        allowfullscreen>
+</iframe>
+      <script type="module">
                 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
                 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
                 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
@@ -167,4 +109,3 @@
                 });
             </script>
 <script type="module" src="session.js"></script>
-    </footer>
